@@ -1,0 +1,15 @@
+/home/fabiofkochem/Codes/MiniSharp/bin/Debug/net8.0/MiniSharp
+/home/fabiofkochem/Codes/MiniSharp/bin/Debug/net8.0/MiniSharp.deps.json
+/home/fabiofkochem/Codes/MiniSharp/bin/Debug/net8.0/MiniSharp.runtimeconfig.json
+/home/fabiofkochem/Codes/MiniSharp/bin/Debug/net8.0/MiniSharp.dll
+/home/fabiofkochem/Codes/MiniSharp/bin/Debug/net8.0/MiniSharp.pdb
+/home/fabiofkochem/Codes/MiniSharp/obj/Debug/net8.0/MiniSharp.GeneratedMSBuildEditorConfig.editorconfig
+/home/fabiofkochem/Codes/MiniSharp/obj/Debug/net8.0/MiniSharp.AssemblyInfoInputs.cache
+/home/fabiofkochem/Codes/MiniSharp/obj/Debug/net8.0/MiniSharp.AssemblyInfo.cs
+/home/fabiofkochem/Codes/MiniSharp/obj/Debug/net8.0/MiniSharp.csproj.CoreCompileInputs.cache
+/home/fabiofkochem/Codes/MiniSharp/obj/Debug/net8.0/MiniSharp.sourcelink.json
+/home/fabiofkochem/Codes/MiniSharp/obj/Debug/net8.0/MiniSharp.dll
+/home/fabiofkochem/Codes/MiniSharp/obj/Debug/net8.0/refint/MiniSharp.dll
+/home/fabiofkochem/Codes/MiniSharp/obj/Debug/net8.0/MiniSharp.pdb
+/home/fabiofkochem/Codes/MiniSharp/obj/Debug/net8.0/MiniSharp.genruntimeconfig.cache
+/home/fabiofkochem/Codes/MiniSharp/obj/Debug/net8.0/ref/MiniSharp.dll

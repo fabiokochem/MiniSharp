@@ -1,3 +1,6 @@
+#nullable enable
+using System;
+using System.Collections.Generic;
 using ToyLang.Lexer;
 using static ToyLang.Parser.Expr;
 using static ToyLang.Parser.Stmt;
@@ -42,6 +45,8 @@ namespace ToyLang.Parser
         private Stmt Statement()
         {
             if (Match(TokenType.Print)) return PrintStatement();
+            if (Match(TokenType.While)) return WhileStatement();
+            if (Match(TokenType.LeftBrace)) return BlockStatement();
             return ExpressionStatement();
         }
 
@@ -59,16 +64,72 @@ namespace ToyLang.Parser
             return new ExprStmt(expr);
         }
 
+        private Stmt WhileStatement()
+        {
+            Expr condition = Expression();
+            Stmt body = Statement();
+            return new While(condition, body);
+        }
+
+        private Stmt BlockStatement()
+        {
+            List<Stmt> statements = new();
+
+            while (!Check(TokenType.RightBrace) && !IsAtEnd())
+            {
+                statements.Add(Declaration());
+            }
+
+            Consume(TokenType.RightBrace, "Expected '}' after block.");
+            return new Block(statements);
+        }
+
+        // ---- EXPRESSIONS ----
+
         private Expr Expression()
         {
-            return Equality();
+            return Assignment();
+        }
+
+        private Expr Assignment()
+        {
+            Expr expr = Equality();
+
+            if (Match(TokenType.Equal))
+            {
+                Token equals = Previous();
+                Expr value = Assignment();
+
+                if (expr is Variable variable)
+                {
+                    return new Assign(variable.Name, value);
+                }
+
+                throw Error(equals, "Invalid assignment target.");
+            }
+
+            return expr;
         }
 
         private Expr Equality()
         {
-            Expr expr = Term();
+            Expr expr = Comparison();
 
             while (Match(TokenType.EqualEqual, TokenType.BangEqual))
+            {
+                Token op = Previous();
+                Expr right = Comparison();
+                expr = new Binary(expr, op.Lexeme, right);
+            }
+
+            return expr;
+        }
+
+        private Expr Comparison()
+        {
+            Expr expr = Term();
+
+            while (Match(TokenType.Less, TokenType.LessEqual, TokenType.Greater, TokenType.GreaterEqual))
             {
                 Token op = Previous();
                 Expr right = Term();
@@ -128,7 +189,7 @@ namespace ToyLang.Parser
             throw Error(Peek(), "Expected expression.");
         }
 
-        // Helpers
+        // ---- Helpers ----
 
         private bool Match(params TokenType[] types)
         {

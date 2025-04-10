@@ -29,3 +29,34 @@ while x < 3 {
     print x;
     let x = x + 1;
 }
+```
+
+## 🛠️ Requirements
+
+To run MiniSharp, you need to have the .NET SDK installed.
+
+✅ Windows
+
+Download and install the .NET SDK from the official Microsoft website:
+👉 https://dotnet.microsoft.com/en-us/download
+
+Make sure to restart your terminal (Command Prompt or PowerShell) after installation.
+
+✅ Linux (Ubuntu / Debian)
+
+Open your terminal and run:
+
+```bash
+sudo apt update
+sudo apt install dotnet-sdk-8.0
+```
+
+## 🚀 Running MiniSharp
+
+After cloning or downloading the project, follow these steps:
+
+```bash
+cd MiniSharp             # go to the project folder
+dotnet build             # (optional) builds the project
+dotnet run               # runs the interpreter
+```

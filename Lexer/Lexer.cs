@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -69,7 +70,7 @@ namespace ToyLang.Lexer
                 case ' ':
                 case '\r':
                 case '\t':
-                    break; // ignorar espaços
+                    break;
                 case '\n':
                     _line++;
                     break;

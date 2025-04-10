@@ -1,3 +1,5 @@
+using System;
+
 namespace ToyLang.Lexer
 {
     public enum TokenType

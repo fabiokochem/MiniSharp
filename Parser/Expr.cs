@@ -1,3 +1,6 @@
+#nullable enable
+using System;
+
 namespace ToyLang.Parser
 {
     public abstract class Expr
@@ -7,6 +10,7 @@ namespace ToyLang.Parser
             T VisitLiteralExpr(Literal expr);
             T VisitVariableExpr(Variable expr);
             T VisitBinaryExpr(Binary expr);
+            T VisitAssignExpr(Assign expr); // 👈 Adicionado
         }
 
         public class Literal : Expr
@@ -39,6 +43,20 @@ namespace ToyLang.Parser
             }
 
             public override T Accept<T>(IVisitor<T> visitor) => visitor.VisitBinaryExpr(this);
+        }
+
+        public class Assign : Expr // 👈 Nova classe de expressão
+        {
+            public string Name;
+            public Expr Value;
+
+            public Assign(string name, Expr value)
+            {
+                Name = name;
+                Value = value;
+            }
+
+            public override T Accept<T>(IVisitor<T> visitor) => visitor.VisitAssignExpr(this);
         }
 
         public abstract T Accept<T>(IVisitor<T> visitor);

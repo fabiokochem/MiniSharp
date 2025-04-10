@@ -1,3 +1,6 @@
+#nullable enable
+using System;
+
 namespace ToyLang.Lexer
 {
     public class Token

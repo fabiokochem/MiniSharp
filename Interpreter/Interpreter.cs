@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using ToyLang.Parser;
@@ -6,7 +7,7 @@ using static ToyLang.Parser.Stmt;
 
 namespace ToyLang.Interpreter
 {
-    public class Interpreter : Expr.IVisitor<object>, Stmt.IVisitor<void>
+    public class Interpreter : Expr.IVisitor<object>, Stmt.IVisitor<object>
     {
         private Environment _environment = new Environment();
 
@@ -42,6 +43,13 @@ namespace ToyLang.Interpreter
             return _environment.Get(expr.Name);
         }
 
+        public object VisitAssignExpr(Assign expr)
+        {
+            object value = expr.Value.Accept(this);
+            _environment.Assign(expr.Name, value);
+            return value;
+        }
+
         public object VisitBinaryExpr(Binary expr)
         {
             object left = expr.Left.Accept(this);
@@ -65,29 +73,33 @@ namespace ToyLang.Interpreter
 
         // ---- STATEMENTS ----
 
-        public void VisitExprStmt(ExprStmt stmt)
+        public object VisitExprStmt(ExprStmt stmt)
         {
             stmt.Expression.Accept(this);
+            return null!;
         }
 
-        public void VisitPrintStmt(Print stmt)
+        public object VisitPrintStmt(Print stmt)
         {
             object value = stmt.Expression.Accept(this);
             Console.WriteLine(value);
+            return null!;
         }
 
-        public void VisitVarStmt(Var stmt)
+        public object VisitVarStmt(Var stmt)
         {
             object value = stmt.Initializer.Accept(this);
             _environment.Define(stmt.Name, value);
+            return null!;
         }
 
-        public void VisitBlockStmt(Block stmt)
+        public object VisitBlockStmt(Block stmt)
         {
             ExecuteBlock(stmt.Statements, new Environment(_environment));
+            return null!;
         }
 
-        public void VisitIfStmt(If stmt)
+        public object VisitIfStmt(If stmt)
         {
             object condition = stmt.Condition.Accept(this);
             if (IsTruthy(condition))
@@ -98,14 +110,16 @@ namespace ToyLang.Interpreter
             {
                 Execute(stmt.ElseBranch);
             }
+            return null!;
         }
 
-        public void VisitWhileStmt(While stmt)
+        public object VisitWhileStmt(While stmt)
         {
             while (IsTruthy(stmt.Condition.Accept(this)))
             {
                 Execute(stmt.Body);
             }
+            return null!;
         }
 
         private void ExecuteBlock(List<Stmt> statements, Environment newEnv)
